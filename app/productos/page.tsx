@@ -1,15 +1,11 @@
-// app/productos/page.tsx
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import ProductGrid from '@/components/ui/ProductGrid'
 import type { Producto } from '@/types/database.types'
 
-// Función para obtener productos (se ejecuta en el servidor)
 async function getProducts(): Promise<Producto[]> {
-  const supabase = await createClient()  // ✅ Ahora con await
-  
+  const supabase = await createClient()
   try {
-    // ✅ Solo productos activos (seguridad en base de datos + aplicación)
     const {  data, error } = await supabase
       .from('productos')
       .select(`
@@ -23,22 +19,18 @@ async function getProducts(): Promise<Producto[]> {
         created_at,
         updated_at
       `)
-      .eq('activo', true) // 🔒 Filtrado de seguridad
+      .eq('activo', true) 
       .order('created_at', { ascending: false })
-      .limit(50) // Límite razonable para evitar sobrecarga
-
+      .limit(50)
     if (error) {
       console.error('Error al obtener productos:', error)
       throw error
     }
-
-    // ✅ Validación adicional en aplicación
     const validProducts = data?.filter(producto => 
       producto.titulo?.trim() && 
       typeof producto.precio === 'number' && 
       producto.precio > 0
     ) || []
-
     return validProducts
   } catch (error) {
     console.error('Error en getProducts:', error)
@@ -47,7 +39,6 @@ async function getProducts(): Promise<Producto[]> {
 }
 
 export default async function ProductosPage() {
-  // ✅ Carga de datos en servidor (SSR)
   const productos = await getProducts()
 
   // Redirección si no hay productos (mejor UX)

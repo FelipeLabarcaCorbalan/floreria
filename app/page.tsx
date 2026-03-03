@@ -1,12 +1,10 @@
-// app/page.tsx
 import Hero from '@/components/sections/Hero'
 import { createClient } from '@/lib/supabase/server'
 import ProductGrid from '@/components/ui/ProductGrid'
 import type { Producto } from '@/types/database.types'
 
-// Función para obtener productos destacados
 async function getFeaturedProducts(): Promise<Producto[]> {
-  const supabase = await createClient()  // ✅ Ahora con await
+  const supabase = await createClient()  
   
   const {  data, error } = await supabase
     .from('productos')
@@ -38,10 +36,8 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <Hero />
 
-      {/* Featured Products */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -57,7 +53,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-rose-500 to-pink-500">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
