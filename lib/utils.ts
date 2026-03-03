@@ -1,15 +1,27 @@
 export function getImageUrl(path: string | null): string | null {
   if (!path) return null
   
-  // Usar transformaciones de Supabase para optimizar imágenes
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const bucketName = process.env.NEXT_PUBLIC_IMAGE_BUCKET || 'productos-imagenes'
+  const bucketName = process.env.NEXT_PUBLIC_IMAGE_BUCKET
   
-  // URL directa con transformaciones (ancho máximo 800px para web)
-  return `${supabaseUrl}/storage/v1/object/public/${bucketName}/${path}?width=800&quality=80`
+  const normalizedPath = path.toLowerCase()
+  
+  // path traversal
+  if (normalizedPath.includes('..') || normalizedPath.includes('//')) {
+    console.error('❌ Path inválido detectado:', path)
+    return null
+  }
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp']
+  const hasValidExtension = allowedExtensions.some(ext => 
+    normalizedPath.endsWith(ext)
+  )
+  if (!hasValidExtension) {
+    console.error('❌ Extensión no permitida:', path)
+    return null
+  }
+  return `${supabaseUrl}/storage/v1/object/public/${bucketName}/${normalizedPath}?width=800&quality=80`
 }
 
-// Formatear precio en formato CLP
 export function formatPrice(price: number): string {
   return new Intl.NumberFormat('es-CL', {
     style: 'currency',
