@@ -19,7 +19,7 @@ export function getImageUrl(path: string | null): string | null {
     console.error('❌ Extensión no permitida:', path)
     return null
   }
-  return `${supabaseUrl}/storage/v1/object/public/${bucketName}/${normalizedPath}?width=800&quality=80`
+  return `${supabaseUrl}/storage/v1/object/public/${bucketName}/${normalizedPath}`
 }
 
 export function formatPrice(price: number): string {

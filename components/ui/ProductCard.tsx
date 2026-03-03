@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { Producto } from '@/types/database.types'
 import { getImageUrl } from '@/lib/utils'
 
@@ -10,7 +9,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ producto, onAddToCart }: ProductCardProps) {
-  const [isImageLoaded, setIsImageLoaded] = useState(false)
   const imageUrl = producto.imagen_path ? getImageUrl(producto.imagen_path) : null
 
   return (
@@ -20,14 +18,9 @@ export default function ProductCard({ producto, onAddToCart }: ProductCardProps)
           <img
             src={imageUrl}
             alt={producto.titulo}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              isImageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={() => setIsImageLoaded(true)}
-            onError={(e) => {
-              e.currentTarget.onerror = null
-              e.currentTarget.src = ''
-            }}
+            className="w-full h-full object-cover" 
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400">
