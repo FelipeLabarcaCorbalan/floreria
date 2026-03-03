@@ -26,7 +26,7 @@ export default function ProductCard({ producto, onAddToCart }: ProductCardProps)
             onLoad={() => setIsImageLoaded(true)}
             onError={(e) => {
               e.currentTarget.onerror = null
-              e.currentTarget.src = '/placeholder-flor.jpg'
+              e.currentTarget.src = ''
             }}
           />
         ) : (
