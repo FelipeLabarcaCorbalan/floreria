@@ -1,4 +1,3 @@
-// components/ui/ProductGrid.tsx
 'use client'
 
 import { useState } from 'react'
@@ -9,7 +8,7 @@ interface ProductGridProps {
   productos: Producto[]
 }
 
-export default function ProductGrid({ productos }: any) {
+export default function ProductGrid({ productos }: ProductGridProps) {
   const [cart, setCart] = useState<Producto[]>([])
 
   const addToCart = (producto: Producto) => {
@@ -31,7 +30,7 @@ export default function ProductGrid({ productos }: any) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {productos.map((producto:any) => (
+      {productos.map((producto) => (
         <ProductCard 
           key={producto.id} 
           producto={producto} 
