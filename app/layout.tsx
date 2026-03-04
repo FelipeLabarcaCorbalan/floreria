@@ -2,9 +2,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import WhatsAppButton from '@/components/WhatsAppButton'
+import LayoutWrapper from '@/components/layout/LayoutWrapper'
 import { CartProvider } from '@/components/context/CartContext'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -34,21 +32,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {/* ✅ Proveedor de contexto para el carrito */}
         <CartProvider>
-          <div className="flex flex-col min-h-screen">
-            {/* ✅ Header en todas las páginas */}
-            <Header />
-            
-            {/* ✅ Contenido principal */}
-            <main className="flex-grow">
-              {children}
-            </main>
-            
-            {/* ✅ Footer en todas las páginas */}
-            <Footer />
-            
-            {/* ✅ Botón flotante de WhatsApp */}
-            <WhatsAppButton />
-          </div>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </CartProvider>
       </body>
     </html>
