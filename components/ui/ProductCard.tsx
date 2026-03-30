@@ -1,18 +1,24 @@
 'use client'
 
+import { useState } from 'react'
 import { getImageUrl } from '@/app/api/imagenes/route'
 import { Producto } from '@/types/database.types'
+import ProductModal from './ProductModal'
 
 interface ProductCardProps {
   producto: Producto
   onAddToCart?: (producto: Producto) => void
 }
 export default function ProductCard({ producto, onAddToCart }: ProductCardProps) {
-  
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const imageUrl = producto.imagen_path ? getImageUrl(producto.imagen_path) : null 
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white transition-shadow hover:shadow-lg flex flex-col h-full">
+    <>
+      <div 
+        className="border border-gray-200 rounded-xl overflow-hidden bg-white transition-all hover:shadow-lg hover:scale-[1.02] flex flex-col h-full cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
       <div className="relative bg-gray-100 h-48">
         {imageUrl ? (
           <img
@@ -58,7 +64,10 @@ export default function ProductCard({ producto, onAddToCart }: ProductCardProps)
             
             {producto.activo && onAddToCart && (
               <button
-                onClick={() => onAddToCart(producto)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onAddToCart(producto)
+                }}
                 className="bg-rose-500 hover:bg-rose-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
                 aria-label={`Agregar ${producto.titulo} al carrito`}
               >
@@ -71,6 +80,15 @@ export default function ProductCard({ producto, onAddToCart }: ProductCardProps)
           </div>
         </div>
       </div>
-    </div>
+      </div>
+
+      {isModalOpen && (
+        <ProductModal
+          producto={producto}
+          onClose={() => setIsModalOpen(false)}
+          onAddToCart={onAddToCart}
+        />
+      )}
+    </>
   )
 }
