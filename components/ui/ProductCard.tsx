@@ -1,15 +1,15 @@
 'use client'
 
+import { getImageUrl } from '@/app/api/imagenes/route'
 import { Producto } from '@/types/database.types'
-import { getImageUrl } from '@/lib/utils'
 
 interface ProductCardProps {
   producto: Producto
   onAddToCart?: (producto: Producto) => void
 }
-
 export default function ProductCard({ producto, onAddToCart }: ProductCardProps) {
-  const imageUrl = producto.imagen_path ? getImageUrl(producto.imagen_path) : null
+  
+  const imageUrl = producto.imagen_path ? getImageUrl(producto.imagen_path) : null 
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden bg-white transition-shadow hover:shadow-lg flex flex-col h-full">
@@ -46,9 +46,9 @@ export default function ProductCard({ producto, onAddToCart }: ProductCardProps)
         
         <h3 className="font-bold text-lg mb-1 line-clamp-1">{producto.titulo}</h3>
         
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2 flex-grow">
+        {/* <p className="text-gray-600 text-sm mb-3 line-clamp-2 flex-grow">
           {producto.descripcion || 'Hermoso arreglo floral fresco y elegante.'}
-        </p>
+        </p> */}
         
         <div className="mt-auto">
           <div className="flex items-center justify-between">
