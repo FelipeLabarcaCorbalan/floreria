@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { getImageUrl } from '@/app/api/imagenes/route'
 import { Producto } from '@/types/database.types'
 import ProductModal from './ProductModal'
+import { getImageUrl } from '@/lib/images'
 
 interface ProductCardProps {
   producto: Producto

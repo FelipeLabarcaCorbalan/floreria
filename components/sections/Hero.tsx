@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { Producto } from '@/types/database.types'
-import { getImageUrl } from '@/app/api/imagenes/route'
+import { getImageUrl } from '@/lib/images'
 
 interface ProductGridProps {
   heroProducts: Producto[]
