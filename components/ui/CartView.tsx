@@ -7,7 +7,7 @@ import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { apiPost } from "@/lib/apiHelper";
 import { CrearPedidoDto, PedidoResponse } from "@/types/pedidos";
-import { getImageUrl } from "@/app/api/imagenes/route";
+import { getImageUrl } from "@/lib/images";
 
 const WHATSAPP_PHONE = "+56987783562";
 

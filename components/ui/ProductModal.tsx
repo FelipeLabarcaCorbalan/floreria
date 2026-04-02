@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useCallback } from 'react'
-import { getImageUrl } from '@/app/api/imagenes/route'
 import { Producto } from '@/types/database.types'
+import { getImageUrl } from '@/lib/images'
 
 interface ProductModalProps {
   producto: Producto
