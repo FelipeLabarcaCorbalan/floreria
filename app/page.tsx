@@ -1,42 +1,14 @@
 import Hero from '@/components/sections/Hero'
-import { createClient } from '@/lib/supabase/server'
 import ProductGrid from '@/components/ui/ProductGrid'
 import type { Producto } from '@/types/database.types'
-
-async function getFeaturedProducts(): Promise<Producto[]> {
-  const supabase = await createClient()  
-  
-  const {  data, error } = await supabase
-    .from('productos')
-    .select(`
-      id,
-      titulo,
-      descripcion,
-      categoria,
-      precio,
-      imagen_path,
-      activo,
-      created_at,
-      updated_at
-    `)
-    .eq('activo', true)
-    .order('created_at', { ascending: false })
-    .limit(6)
-
-  if (error) {
-    console.error('Error al obtener productos destacados:', error)
-    return []
-  }
-
-  return data || []
-}
+import { apiGet } from '@/lib/apiHelper'
 
 export default async function HomePage() {
-  const productosDestacados = await getFeaturedProducts()
-
+  const productosDestacados = await apiGet<Producto[]>('/productos/destacados');
+  const heroProducts = productosDestacados.slice(0, 3);
   return (
     <div className="min-h-screen">
-      <Hero />
+      <Hero heroProducts={heroProducts}/>
 
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">

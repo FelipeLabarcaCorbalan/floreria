@@ -5,7 +5,7 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
-import { CartProvider } from '@/components/context/CartContext'
+import ToastProvider from '@/components/ui/ToastProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,24 +32,16 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        {/* ✅ Proveedor de contexto para el carrito */}
-        <CartProvider>
-          <div className="flex flex-col min-h-screen">
-            {/* ✅ Header en todas las páginas */}
-            <Header />
-            
-            {/* ✅ Contenido principal */}
-            <main className="flex-grow">
-              {children}
-            </main>
-            
-            {/* ✅ Footer en todas las páginas */}
-            <Footer />
-            
-            {/* ✅ Botón flotante de WhatsApp */}
-            <WhatsAppButton />
-          </div>
-        </CartProvider>
+          <ToastProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+              <WhatsAppButton />
+            </div>
+          </ToastProvider>
       </body>
     </html>
   )

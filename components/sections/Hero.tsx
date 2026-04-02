@@ -1,42 +1,46 @@
-// components/sections/Hero.tsx
 'use client'
 
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { Producto } from '@/types/database.types'
+import { getImageUrl } from '@/app/api/imagenes/route'
 
-const slides = [
+interface ProductGridProps {
+  heroProducts: Producto[]
+}
+
+export default function Hero({ heroProducts }: ProductGridProps) {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const slides = [
   {
     id: 1,
-    title: 'Flores Frescas para Cada Momento',
-    subtitle: 'Arreglos florales creados con amor y dedicación',
+    title: 'Recuerda y Honra a tus Seres Queridos',
+    subtitle: 'Arreglos delicados que expresan lo que las palabras no pueden',
     cta: 'Ver Productos',
-    ctaLink: '/productos',
-    image: '/hero-1.jpg', // Puedes usar una imagen de Supabase Storage
+    ctaLink: `/productos?categoria=${heroProducts[0]?.categoria}`,
+    image: getImageUrl(heroProducts[0]?.imagen_path),
     gradient: 'from-rose-500 to-pink-500',
   },
   {
     id: 2,
-    title: 'Entregas en Todo Chile',
-    subtitle: 'Llevamos la belleza de las flores hasta tu puerta',
-    cta: 'Contáctanos',
-    ctaLink: '/contacto',
-    image: '/hero-2.jpg',
+    title: 'Flores que Hablan por Ti',
+    subtitle: 'Expresa amor, gratitud o amistad con un hermoso ramo',
+    cta: 'Ver Productos',
+    ctaLink: `/productos?categoria=${heroProducts[1]?.categoria}`,
+    image: getImageUrl(heroProducts[1]?.imagen_path),
     gradient: 'from-purple-500 to-indigo-500',
   },
   {
     id: 3,
-    title: 'Regalos que Hablan del Corazón',
-    subtitle: 'Sorprende a tus seres queridos con flores frescas',
-    cta: 'Ver Ofertas',
-    ctaLink: '/ofertas',
-    image: '/hero-3.jpg',
+    title: 'Dale Vida a tus Espacios',
+    subtitle: 'Piezas únicas que transforman cualquier ambiente',
+    cta: 'Ver Productos',
+    ctaLink: `/productos?categoria=${heroProducts[2]?.categoria}`,
+    image: getImageUrl(heroProducts[2]?.imagen_path),
     gradient: 'from-amber-500 to-orange-500',
   },
 ]
-
-export default function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0)
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length)
@@ -45,7 +49,7 @@ export default function Hero() {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
   }
-
+ 
   return (
     <section className="relative h-[80vh] min-h-[600px]">
       {/* Slides */}
@@ -54,12 +58,12 @@ export default function Hero() {
           <div
             key={slide.id}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
+              index === currentSlide ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
             }`}
           >
             {/* Background Image */}
             <div 
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-contain bg-no-repeat bg-center"
               style={{
                 backgroundImage: slide.image ? `url(${slide.image})` : 'none',
                 backgroundColor: '#f3f4f6',
