@@ -44,18 +44,18 @@ const contactInfo = [
     value: 'michelle.sepulveda4@gmail.com',
     href: 'mailto:michelle.sepulveda4@gmail.com',
   },
-    {
-    icon: Facebook,
-    label: 'Facebook',
-    value: 'Lun - Vie: 9:00 - 19:00',
-    href: '#',
-  },
-    {
-    icon: Instagram,
-    label: 'Instagram',
-    value: 'Lun - Vie: 9:00 - 19:00',
-    href: '#',
-  },
+  //   {
+  //   icon: Facebook,
+  //   label: 'Facebook',
+  //   value: 'Lun - Vie: 9:00 - 19:00',
+  //   href: '#',
+  // },
+  //   {
+  //   icon: Instagram,
+  //   label: 'Instagram',
+  //   value: 'Lun - Vie: 9:00 - 19:00',
+  //   href: '#',
+  // },
 ]
 
 export default function Footer() {
