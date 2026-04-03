@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ShoppingCart, Phone, ChevronDown } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCategorias } from "@/hooks/useCategorias";
 
 const navigation = [
@@ -13,6 +13,7 @@ const navigation = [
 ];
 
 export default function Header() {
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [categoriasOpen, setCategoriasOpen] = useState(false);
@@ -37,6 +38,7 @@ export default function Header() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
+        !mobileMenuOpen &&
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
@@ -46,7 +48,7 @@ export default function Header() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [mobileMenuOpen]);
 
   const cartCount = useCartStore((state) => state.getTotalItems());
 
@@ -205,14 +207,19 @@ export default function Header() {
               {categoriasOpen && (
                 <div className="pl-4 space-y-2 pb-2">
                   {categorias.map((categoria) => (
-                    <Link
+                    <button
                       key={categoria}
-                      href={`/productos?categoria=${encodeURIComponent(categoria)}`}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block py-2 text-gray-600 hover:text-rose-500 transition-colors"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setCategoriasOpen(false);
+                        router.push(
+                          `/productos?categoria=${encodeURIComponent(categoria)}`,
+                        );
+                      }}
+                      className="block w-full text-left py-2 text-gray-600 hover:text-rose-500 transition-colors"
                     >
                       {categoria}
-                    </Link>
+                    </button>
                   ))}
                 </div>
               )}
