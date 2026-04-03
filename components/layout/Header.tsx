@@ -165,7 +165,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-white z-50">
+        <div className="md:hidden fixed inset-0 bg-white z-50 h-screen w-full">
           <div className="flex justify-between items-center p-4 border-b">
             <Link href="/" className="text-xl font-bold text-gray-900">
               Flores de <span className="text-rose-500">Rayén</span>
